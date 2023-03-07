@@ -19,5 +19,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::prefix('manage')->middleware('auth:api')->group(function () {
-    Route::apiResource('category', \App\Http\Controllers\CategoryController::class)->middleware('scope:category-manage');
+    Route::apiResource('category', \App\Http\Controllers\Manage\CategoryController::class)->middleware('scope:category-manage');
+    Route::apiResource('product', \App\Http\Controllers\Manage\ProductController::class)->middleware('scope:product-manage');
 });
