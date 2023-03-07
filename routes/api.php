@@ -22,3 +22,7 @@ Route::prefix('manage')->middleware('auth:api')->group(function () {
     Route::apiResource('category', \App\Http\Controllers\Manage\CategoryController::class)->middleware('scope:category-manage');
     Route::apiResource('product', \App\Http\Controllers\Manage\ProductController::class)->middleware('scope:product-manage');
 });
+
+Route::apiResource('product', \App\Http\Controllers\ProductController::class);
+Route::put('product/{product}/favorite', [\App\Http\Controllers\ProductController::class, 'favorite'])->middleware('auth:api');
+Route::delete('product/{product}/favorite', [\App\Http\Controllers\ProductController::class, 'unfavorite'])->middleware('auth:api');
