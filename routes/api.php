@@ -26,3 +26,4 @@ Route::prefix('manage')->middleware('auth:api')->group(function () {
 Route::apiResource('product', \App\Http\Controllers\ProductController::class);
 Route::put('product/{product}/favorite', [\App\Http\Controllers\ProductController::class, 'favorite'])->middleware('auth:api');
 Route::delete('product/{product}/favorite', [\App\Http\Controllers\ProductController::class, 'unfavorite'])->middleware('auth:api');
+Route::apiResource('order', \App\Http\Controllers\OrderController::class)->middleware('auth:api');
