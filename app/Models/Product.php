@@ -31,4 +31,9 @@ class Product extends Model
     {
         return $this->hasMany(Favorite::class);
     }
+
+    public function getSalePriceAttribute(): float
+    {
+        return $this->discounted_price ?: $this->price;
+    }
 }

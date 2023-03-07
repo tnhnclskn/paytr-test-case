@@ -14,10 +14,14 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $user = $request->user('api');
-        $products = Product::with([
-            'category',
-            'favorites' => fn ($query) => $query->forUser($user),
-        ])->paginate();
+        $products = Product::with('category')
+            ->withCount([
+                'favorites' => fn ($query) => $query->forUser($user),
+            ])
+            ->orderBy('favorites_count', 'desc')
+            ->orderBy('category_id', 'asc')
+            ->orderBy('name', 'asc')
+            ->paginate();
 
         return ProductResource::collection($products);
     }
@@ -30,8 +34,9 @@ class ProductController extends Controller
         $user = $request->user('api');
         $product->load([
             'category',
-            'favorites' => fn ($query) => $query->forUser($user),
         ]);
+
+        $product->is_favorited = $product->favorites()->forUser($user)->count() > 0;
 
         return ProductResource::make($product);
     }

@@ -21,9 +21,10 @@ class ProductResource extends JsonResource
             'slug' => $this->slug,
             'name' => $this->name,
             'description' => $this->description,
-            'price' => $this->price,
-            'discounted_price' => $this->discounted_price,
-            'favorited' => $this->whenLoaded('favorites', fn () => $this->favorites->isNotEmpty()),
+            'price' => (float) $this->price,
+            'discounted_price' => (float) $this->discounted_price,
+            'sale_price' => $this->sale_price,
+            'is_favorited' => $this->when(isset($this->is_favorited), fn () => $this->is_favorited, $this->when(isset($this->favorites), fn () => $this->favorites->isNotEmpty())),
         ];
     }
 }
