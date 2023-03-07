@@ -14,7 +14,10 @@ class RoleAndPermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        $role = Role::create(['name' => 'admin']);
+        $role = Role::create([
+            'name' => 'admin',
+            'guard_name' => 'api',
+        ]);
 
         $permissions = [
             'manage.category',
@@ -29,6 +32,7 @@ class RoleAndPermissionSeeder extends Seeder
             ]);
         }
 
-        $role->syncPermissions($permissions);
+        // role permission for api guard
+        $role->givePermissionTo($permissions);
     }
 }
