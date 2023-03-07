@@ -22,7 +22,7 @@ class ProductResource extends JsonResource
             'name' => $this->name,
             'description' => $this->description,
             'price' => (float) $this->price,
-            'discounted_price' => (float) $this->discounted_price,
+            'discounted_price' => (float) $this->discounted_price ?: null,
             'sale_price' => $this->sale_price,
             'is_favorited' => $this->when(isset($this->is_favorited), fn () => $this->is_favorited, $this->when(isset($this->favorites), fn () => $this->favorites->isNotEmpty())),
         ];

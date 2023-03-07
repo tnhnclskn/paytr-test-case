@@ -82,4 +82,10 @@ class Order extends Model
 
         return $order;
     }
+
+    public function updateTotal()
+    {
+        $this->total = $this->items->map(fn (OrderItem $item) => $item->price * $item->quantity)->sum();
+        $this->save();
+    }
 }
